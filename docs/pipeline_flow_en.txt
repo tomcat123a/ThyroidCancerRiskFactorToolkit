@@ -1,0 +1,43 @@
+THCA RISK FACTOR TOOLKIT - PIPELINE FLOW
+=======================================
+
+[Input]
+  |
+  v
+preproc_thca.xlsx
+  |
+  +--> read workbook
+  |
+  +--> expand causal_triplets_1 ... causal_triplets_12
+  |
+  v
+long-form triplet records
+  |
+  +--> country / continent tagging
+  |
+  +--> semantic clustering
+  |
+  +--> synonym fusion
+  |
+  +--> UMLS-style normalization
+  |
+  v
+analysis-ready factor table
+  |
+  +--> manuscript statistics export
+  |      |
+  |      +--> year-bin paper counts
+  |      +--> continent summaries
+  |      +--> top-10 country summaries
+  |      +--> label summaries
+  |      +--> evidence summaries
+  |      +--> endpoint top factors
+  |      +--> synonym catalog
+  |      +--> UMLS coverage summary
+  |
+  v
+outputs/
+  |
+  +--> thca_intermediate_demo.xlsx
+  +--> thca_statistics_demo.xlsx
+  +--> run_summary_demo.md

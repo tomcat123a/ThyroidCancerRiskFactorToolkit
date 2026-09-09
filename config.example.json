@@ -1,0 +1,30 @@
+{
+  "project_title": "Code Repository for LLM-Based Thyroid Cancer Risk Factor Extraction (including semantic clustering, semantic tagging, synonym fusion, statistics, and UMLS matching)",
+  "author_name": "Yuqun Zeng",
+  "author_email": "zengyuqun401@163.com",
+  "input_xlsx": "data/sample/preproc_thca_demo_first100.xlsx",
+  "output_dir": "outputs",
+  "prompt_dir": "prompt",
+  "agent_data_dir": "agent_data",
+  "demo_umls_lexicon_csv": "data/demo_resources/umls_concepts_demo.csv",
+  "demo_country_reference_csv": "data/demo_resources/country_continent_reference.csv",
+  "llm": {
+    "enabled": false,
+    "provider": "deepseek_v3_2",
+    "model": "DeepSeek-V3.2",
+    "api_url": "https://your-api-url.example.com/v1/chat/completions",
+    "api_key": "YOUR_API_KEY",
+    "timeout_seconds": 120,
+    "max_workers": 10,
+    "thinking_enabled": false
+  },
+  "alternate_llm": {
+    "provider": "gemini_3_pro",
+    "model": "Gemini-3-pro",
+    "api_url": "https://your-api-url.example.com/v1beta/models/gemini-3-pro:generateContent",
+    "api_key": "YOUR_API_KEY",
+    "timeout_seconds": 120,
+    "max_workers": 10,
+    "thinking_enabled": false
+  }
+}

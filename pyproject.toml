@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thca-risk-factor-toolkit"
+version = "0.1.0"
+description = "Code repository for large-language-model-driven thyroid cancer risk factor extraction, semantic clustering, synonym fusion, statistics, and UMLS matching."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Yuqun Zeng", email = "zengyuqun401@163.com" }
+]
+dependencies = [
+  "openpyxl>=3.1",
+  "pandas>=2.0",
+  "requests>=2.31"
+]
+keywords = [
+  "thyroid-cancer",
+  "risk-factor",
+  "llm",
+  "umls",
+  "semantic-clustering",
+  "synonym-fusion"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Scientific/Engineering :: Medical Science Apps."
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

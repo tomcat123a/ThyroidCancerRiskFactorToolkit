@@ -1,0 +1,21 @@
+GITHUB HOMEPAGE SNIPPETS
+========================
+
+1) Short English description
+Code repository for LLM-based thyroid cancer risk factor extraction, including semantic clustering, semantic tagging, synonym fusion, statistics, and UMLS matching.
+
+2) Short Chinese description
+针对基于大模型的甲状腺癌风险因素抽取的方法代码库，包括语义聚类、语义标记、同义词合并、统计与 UMLS 匹配功能。
+
+3) Suggested GitHub Topics
+thyroid-cancer
+risk-factor-extraction
+llm
+semantic-clustering
+synonym-fusion
+umls
+biomedical-nlp
+medical-informatics
+
+4) Suggested repository subtitle
+From preproc_thca.xlsx to semantic labels, synonym fusion, UMLS matching, and manuscript-ready statistics.

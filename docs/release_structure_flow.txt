@@ -1,0 +1,53 @@
+PUBLIC RELEASE STRUCTURE
+========================
+
+github_repo/
+|
++-- README.md                      -> default GitHub landing page in English
++-- README.zh-CN.md                -> Chinese mirror page
++-- config.json                    -> placeholder runtime config
++-- config.example.json            -> copyable config template
++-- pyproject.toml                 -> package metadata
++-- requirements.txt               -> dependency list
+|
++-- data/
+|   |
+|   +-- sample/
+|   |   |
+|   |   +-- preproc_thca_demo_first100.xlsx
+|   |       -> public demo workbook only
+|   |
+|   +-- demo_resources/
+|       |
+|       +-- country_continent_reference.csv
+|       +-- umls_concepts_demo.csv
+|
++-- prompt/
+|   |
+|   +-- en/                        -> English prompts used by default
+|   +-- zh/                        -> Chinese prompt mirrors
+|
++-- src/thca_risk_factor_toolkit/
+|   |
+|   +-- pipeline.py                -> end-to-end workflow
+|   +-- statistics.py              -> manuscript-style tables
+|   +-- clustering.py              -> semantic labels
+|   +-- synonyms.py                -> synonym fusion
+|   +-- umls.py                    -> UMLS matching
+|   +-- tagging.py                 -> country / continent enrichment
+|
++-- scripts/
+|   |
+|   +-- install.sh
+|   +-- run_demo.sh
+|   +-- run_full.sh
+|
++-- docs/
+    |
+    +-- architecture.md
+    +-- output_spec.md
+    +-- manuscript_table_mapping.md
+    +-- github_push.md
+    +-- github_about.txt
+    +-- pipeline_flow_en.txt
+    +-- release_structure_flow.txt
