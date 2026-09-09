@@ -29,7 +29,8 @@ This repository provides a modular workflow for thyroid cancer risk factor extra
 
 6. `src/thca_risk_factor_toolkit/synonyms.py`
    - groups semantically close subject names into synonym groups
-   - creates `factor_key`, `factor_name`, `factor_synonyms`, and `factor_group_size`
+   - adds a post-clustering labeling step for each synonym group
+   - creates `factor_key`, `factor_name`, `factor_synonyms`, `factor_group_size`, and `factor_cluster_label`
 
 7. `src/thca_risk_factor_toolkit/umls.py`
    - performs UMLS-style lexical matching against a demo lexicon
@@ -51,6 +52,7 @@ preproc_thca.xlsx
   -> country/continent enrichment
   -> semantic labels
   -> synonym fusion
+  -> post-clustering group labels
   -> UMLS matching
   -> intermediate workbook
   -> manuscript statistics workbook

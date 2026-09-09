@@ -103,6 +103,8 @@ def build_statistics_workbook(records: pd.DataFrame) -> dict[str, pd.DataFrame]:
         work[
             [
                 "factor_name",
+                "factor_cluster_label",
+                "factor_display_name",
                 "factor_synonyms",
                 "factor_group_size",
                 "label_1",

@@ -16,6 +16,7 @@
 - 国家与大洲标注
 - 语义聚类与分级标签
 - 同义词融合
+- 聚类后同义词组标签命名
 - UMLS 风格标准化匹配
 - 面向论文写作的统计表导出
 - 中英文双语提示词管理，代码默认使用英文提示词
@@ -145,7 +146,7 @@ github_repo/
 - `prompt/en/*.txt`
 - `prompt/zh/*.txt`
 
-仓库中同时保留中英文双语提示词，代码默认读取英文版。
+仓库中同时保留中英文双语提示词，代码默认读取英文版，其中也包含“同义词聚类后标签命名”的提示词。
 
 ## 文档索引
 
@@ -153,13 +154,6 @@ github_repo/
 - [docs/output_spec.md](docs/output_spec.md)
 - [docs/manuscript_table_mapping.md](docs/manuscript_table_mapping.md)
 - [docs/github_push.md](docs/github_push.md)
-- [docs/github_about.txt](docs/github_about.txt)
 - [docs/homepage_snippets.txt](docs/homepage_snippets.txt)
 - [docs/pipeline_flow_en.txt](docs/pipeline_flow_en.txt)
 - [docs/release_structure_flow.txt](docs/release_structure_flow.txt)
-
-## GitHub 右上角 About 建议文案
-
-```text
-项目作者是Yuqun Zeng,邮箱是zengyuqun401@163.com，项目标题是，针对基于大模型的甲状腺癌风险因素抽取的方法代码库（包括语义聚类，语义标记，同义词合并，统计，umls匹配等功能）。
-```

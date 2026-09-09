@@ -48,6 +48,5 @@ github_repo/
     +-- output_spec.md
     +-- manuscript_table_mapping.md
     +-- github_push.md
-    +-- github_about.txt
     +-- pipeline_flow_en.txt
     +-- release_structure_flow.txt

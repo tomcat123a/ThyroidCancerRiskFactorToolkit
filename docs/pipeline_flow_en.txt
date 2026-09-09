@@ -19,6 +19,8 @@ long-form triplet records
   |
   +--> synonym fusion
   |
+  +--> post-clustering group labeling
+  |
   +--> UMLS-style normalization
   |
   v

@@ -37,6 +37,8 @@ Important columns:
 - `factor_key`
 - `factor_synonyms`
 - `factor_group_size`
+- `factor_cluster_label`
+- `factor_display_name`
 - `umls_term`
 - `umls_cui`
 - `umls_semantic_type`
@@ -95,6 +97,7 @@ Sheets:
     - canonical factor name
     - fused synonym display string
     - group size
+    - post-clustering group label
     - semantic labels
     - UMLS fields
 

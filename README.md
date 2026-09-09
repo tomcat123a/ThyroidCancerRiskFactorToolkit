@@ -18,6 +18,7 @@ Included capabilities:
 - country and continent tagging
 - semantic clustering and hierarchical tagging
 - synonym fusion
+- post-clustering group labeling
 - UMLS-style normalization
 - manuscript-oriented table exports
 - bilingual prompt assets, with English prompts used by default in code
@@ -147,7 +148,7 @@ All prompt assets are stored explicitly in:
 - `prompt/en/*.txt`
 - `prompt/zh/*.txt`
 
-The repository keeps Chinese and English prompt versions, while the code reads the English prompt files by default.
+The repository keeps Chinese and English prompt versions, while the code reads the English prompt files by default. This includes the post-clustering group labeling prompt used after synonym fusion.
 
 ## Documentation Index
 
@@ -155,15 +156,6 @@ The repository keeps Chinese and English prompt versions, while the code reads t
 - [docs/output_spec.md](docs/output_spec.md)
 - [docs/manuscript_table_mapping.md](docs/manuscript_table_mapping.md)
 - [docs/github_push.md](docs/github_push.md)
-- [docs/github_about.txt](docs/github_about.txt)
 - [docs/homepage_snippets.txt](docs/homepage_snippets.txt)
 - [docs/pipeline_flow_en.txt](docs/pipeline_flow_en.txt)
 - [docs/release_structure_flow.txt](docs/release_structure_flow.txt)
-
-## GitHub About Text
-
-Use the following text in the repository “About” panel:
-
-```text
-项目作者是Yuqun Zeng,邮箱是zengyuqun401@163.com，项目标题是，针对基于大模型的甲状腺癌风险因素抽取的方法代码库（包括语义聚类，语义标记，同义词合并，统计，umls匹配等功能）。
-```
