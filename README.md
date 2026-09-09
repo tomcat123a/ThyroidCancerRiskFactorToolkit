@@ -148,7 +148,7 @@ All prompt assets are stored explicitly in:
 - `prompt/en/*.txt`
 - `prompt/zh/*.txt`
 
-The repository keeps Chinese and English prompt versions, while the code reads the English prompt files by default. This includes the post-clustering group labeling prompt used after synonym fusion.
+The repository keeps Chinese and English prompt versions, while the code reads the English prompt files by default. This includes synonym grouping, post-clustering group labeling, and candidate-label subject-name labeling prompts.
 
 ## Documentation Index
 
