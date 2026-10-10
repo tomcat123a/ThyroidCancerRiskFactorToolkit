@@ -1,4 +1,4 @@
-"""Shared path/config/export utilities for Step 10 (evidence quantification)."""
+"""Shared path/config/export utilities for evidence quantification."""
 
 from __future__ import annotations
 

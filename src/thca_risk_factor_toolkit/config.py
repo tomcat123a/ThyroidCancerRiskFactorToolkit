@@ -68,7 +68,7 @@ def load_config() -> AppConfig:
         project_title=str(payload.get("project_title", "")).strip(),
         author_name=str(payload.get("author_name", "")).strip(),
         author_email=str(payload.get("author_email", "")).strip(),
-        input_xlsx=(project_root / str(payload.get("input_xlsx", "data/sample/preproc_thca_demo_first100.xlsx"))).resolve(),
+        input_xlsx=(project_root / str(payload.get("input_xlsx", "data/sample/abstracts_final_demo_first100.xlsx"))).resolve(),
         output_dir=(project_root / str(payload.get("output_dir", "outputs"))).resolve(),
         prompt_dir=(project_root / str(payload.get("prompt_dir", "prompt"))).resolve(),
         agent_data_dir=(project_root / str(payload.get("agent_data_dir", "agent_data"))).resolve(),

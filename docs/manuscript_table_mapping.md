@@ -23,6 +23,6 @@ This repository does not reproduce figures, but it exports table-ready data alig
 ## Not included
 
 - any plotting output
-- upstream preprocessing before `preproc_thca.xlsx`
+- upstream preprocessing before `abstracts_final.xlsx`
 - licensed full-scale UMLS content
 - the full dataset (only demo samples are distributed)

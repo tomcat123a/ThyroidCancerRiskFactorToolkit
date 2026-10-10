@@ -1,12 +1,10 @@
-"""Step 09: synonym harmonization within Level-3 categories.
+"""Synonym harmonization within Level-3 categories.
 
-Reproduces ``step09_group_factor_synonyms_entry.py`` (the second-round,
-semantic-merged ``v2`` result).  In the public repository the authoritative
-synonym grouping is shipped as a CSV
+The authoritative synonym grouping is shipped as a CSV
 (``data/sample/09_factor_label_associations_semantic_merged_v2_demo_first100.csv``)
 and is loaded directly by :func:`load_semantic_factor_map`.  The full pipeline
 performs LLM synonym grouping per ``label_3`` and then exports this same CSV
-schema; see ``scripts/run_full_pipeline_main.py``.
+schema.
 """
 
 from __future__ import annotations

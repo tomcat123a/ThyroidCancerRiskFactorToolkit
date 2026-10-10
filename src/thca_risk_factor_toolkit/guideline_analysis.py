@@ -1,10 +1,10 @@
 """Guideline-oriented concordance evaluation and gap analysis.
 
-Reproduces ``step10_guidelines``.  Each normalized risk factor (synonym group)
-is compared against expert-curated guideline positive-label groups using a
+Reproduces the guideline module.  Each normalized risk factor (synonym group) is
+compared against expert-curated guideline positive-label groups using a
 deterministic two-stage procedure: an exact-group match, then (under the
-``shared_term`` policy) a shared-term match.  Coverage is reported at the
-factor level and stratified by composite-score percentile and taxonomy level.
+``shared_term`` policy) a shared-term match.  Coverage is reported at the factor
+level and stratified by composite-score percentile and taxonomy level.
 
 Important: ``in_guideline_* == 0`` means "no legacy positive hit", which does
 NOT prove the factor is absent from the guideline.
@@ -19,9 +19,9 @@ from collections import defaultdict
 
 import pandas as pd
 
+from .factor_data import LABELS, YEAR_BINS
 from .factor_scoring import year_to_bin
-from .step10_common import Progress
-from .step10_factor_data import LABELS, YEAR_BINS
+from .table_export import Progress
 
 EXCLUDED_GUIDELINES = {"ESMO 2019"}
 IGNORED_LABEL_FILES = {"nan.json"}

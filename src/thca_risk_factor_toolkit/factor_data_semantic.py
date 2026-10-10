@@ -1,7 +1,7 @@
-"""Step 10 detail join from the semantic-merged Step 09 factor file.
+"""Detail join from the semantic-merged synonym factor file.
 
-Reproduces ``step10_factor_data_semantic.build_detail_semantic``.  Instead of
-loading Step 08 labels plus the Step 09 manifest JSON, it reads the second-round
+Reproduces ``factor_data_semantic.build_detail_semantic``.  Instead of loading
+the Step 08 labels plus the Step 09 manifest JSON, it reads the second-round
 consolidated ``09_factor_label_associations_semantic_merged_v2.csv`` (already
 exploded to one row per ``subject_name``) and treats it as the authoritative
 synonym grouping.  The produced ``detail`` frame feeds the scoring and guideline
@@ -12,15 +12,8 @@ from __future__ import annotations
 
 import pandas as pd
 
+from .factor_data import extract_source_triplets
 from .factor_scoring import YEAR_BINS
-from .step10_factor_data import extract_source_triplets
-
-AUDIT_COLUMNS = [
-    "_source_row_id", "label_1", "label_2", "label_3",
-    "subject_name_step08", "subject_name", "source_triplet_count",
-    "factor_key_before", "factor_key_after", "factor_id_before", "factor_id_after",
-    "repair_reason", "classification_status",
-]
 
 
 def build_detail_semantic(

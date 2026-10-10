@@ -4,24 +4,29 @@ TCRISKFLOW - PIPELINE FLOW
 [Input]
   |
   v
-preproc_thca.xlsx  (wide format: metadata + causal_triplets_1..12)
+abstracts_final.xlsx  (one row per paper: title + abstract + metadata)
   |
-  +--> Step 05  title deduplication (TI, keep=first)
+  +--> structured extraction      (DeepSeek-V4-Pro, temperature=0, JSON schema)
+  |      -> causal_triplets_1..12 wide table
   |
-  +--> Step 07  keep thyroid-related triplets (disease contains "thyr")
+  +--> geographic enrichment      (country_or_region -> country/continent)
   |
-  +--> Step 08  expand triplets + classify to Level-3 (3-level taxonomy)
+  +--> deduplicate_title          (TI, keep=first)
   |
-  +--> Step 09  synonym harmonization (authoritative v2 factor map)
+  +--> count_thyroid_triplets     (disease contains "thyr")
   |
-  +--> Step 10  composite evidence score + group statistics
+  +--> classify_risk_factors      (expand triplets + Level-3 classification)
+  |
+  +--> group_synonyms             (authoritative v2 factor map)
+  |
+  +--> evidence_quantification    (composite score + group statistics)
   |      |
   |      +--> year-bin top factors
   |      +--> continent/country tables
   |      +--> label/evidence/endpoint group tables
   |      +--> guideline concordance + gap analysis
   |
-  +--> UMLS-style normalization (similarity >= 0.90, dedup by CUI)
+  +--> umls_match                 (similarity >= 0.90, dedup by CUI)
   |
   v
 outputs/

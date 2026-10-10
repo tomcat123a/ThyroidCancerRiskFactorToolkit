@@ -14,13 +14,17 @@ github_repo/
 |   |
 |   +-- sample/
 |   |   |
-|   |   +-- preproc_thca_demo_first100.xlsx
-|   |       -> public demo workbook only
+|   |   +-- abstracts_final_demo_first100.xlsx
+|   |       -> random 100-row demo of the post-screening abstract table
+|   |   +-- 09_factor_label_associations_semantic_merged_v2_demo_first100.csv
+|   |       -> random 100-row demo of the Step 09 synonym file
 |   |
 |   +-- demo_resources/
 |       |
+|       +-- factor-subcategory.json
 |       +-- country_continent_reference.csv
 |       +-- umls_concepts_demo.csv
+|       +-- guideline/{ATA 2015, NCCN 2023}/*.json
 |
 +-- prompt/
 |   |
@@ -30,11 +34,20 @@ github_repo/
 +-- src/thca_risk_factor_toolkit/
 |   |
 |   +-- pipeline.py                -> end-to-end workflow
-|   +-- statistics.py              -> manuscript-style tables
-|   +-- clustering.py              -> semantic labels
-|   +-- synonyms.py                -> synonym fusion
-|   +-- umls.py                    -> UMLS matching
-|   +-- tagging.py                 -> country / continent enrichment
+|   +-- structured_extraction.py   -> LLM title+abstract -> causal triplets
+|   +-- deduplicate_title.py       -> title dedup
+|   +-- count_thyroid_triplets.py  -> thyroid-related triplet filter
+|   +-- classify_risk_factors.py   -> Level-3 classification
+|   +-- factor_classifier.py       -> classification (LLM + rule fallback)
+|   +-- group_synonyms.py          -> synonym factor map
+|   +-- merge_age.py               -> Age consolidation
+|   +-- factor_data.py             -> source triplet parsing
+|   +-- factor_scores.py           -> composite evidence score
+|   +-- guideline_analysis.py      -> guideline concordance
+|   +-- evidence_quantification.py -> scoring + guideline entry
+|   +-- umls_match.py              -> UMLS matching
+|   +-- statistics.py              -> bibliometric tables
+|   +-- ablation/                  -> clustering ablation
 |
 +-- scripts/
 |   |
@@ -47,6 +60,7 @@ github_repo/
     +-- architecture.md
     +-- output_spec.md
     +-- manuscript_table_mapping.md
+    +-- ablation_study.md
     +-- github_push.md
     +-- pipeline_flow_en.txt
     +-- release_structure_flow.txt

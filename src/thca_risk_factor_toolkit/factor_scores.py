@@ -1,7 +1,6 @@
 """Four-component composite evidence score (legacy formula, inclusive bins).
 
-Reproduces ``step10_factor_scores.compute_tables``.  The composite score is a
-weighted sum of Z-standardized components:
+The composite score is a weighted sum of Z-standardized components::
 
     score = 2*z(log(n_paper)) + 1*z(log(n_sample)) + 1*z(statsig) + 2*z(evigrade)
 
@@ -13,6 +12,7 @@ from __future__ import annotations
 
 import pandas as pd
 
+from .factor_data import FACTOR_COLUMNS, LABELS, YEAR_BINS
 from .factor_scoring import (
     W_EVIGRADE,
     W_NUM,
@@ -22,8 +22,7 @@ from .factor_scoring import (
     safe_log,
     to_key,
 )
-from .step10_common import Progress
-from .step10_factor_data import FACTOR_COLUMNS, LABELS, YEAR_BINS
+from .table_export import Progress
 
 COMPONENTS = [
     ("log_num_publish_paper", "num", W_NUM),

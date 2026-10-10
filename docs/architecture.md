@@ -2,21 +2,23 @@
 
 ## Goal
 
-`thca_risk_factor_toolkit` is the public implementation of the TCRiskFlow manuscript workflow. It starts from a wide-format preprocessed workbook and produces a three-level taxonomy of harmonized, scored risk factors with temporal, geographic and guideline-oriented analyses.
+`thca_risk_factor_toolkit` is the public implementation of the TCRiskFlow manuscript workflow. It starts from the post-screening abstract table (`abstracts_final.xlsx`, one row per paper with title + abstract) and produces a three-level taxonomy of harmonized, scored risk factors with temporal, geographic and guideline-oriented analyses.
 
 ## Module relationships
 
 The pipeline (`pipeline.py`) orchestrates these modules in order:
 
 ```text
-preproc_thca.xlsx
-  -> step05_deduplicate_title.py     (title dedup)
-  -> step07_count_thyroid_triplets.py (keep thyroid-related triplets)
-  -> step08_extract_classify.py      (expand triplets + Level-3 classification)
-  -> step09_group_synonyms.py        (authoritative synonym factor map)
-  -> step10_entry.py                 (composite score + group + guideline)
-  -> umls_match.py                   (UMLS-style normalization)
-  -> statistics.py                   (bibliometric tables)
+abstracts_final.xlsx  (title + abstract + metadata)
+  -> structured_extraction.py       (LLM: title+abstract -> causal_triplets)
+  -> geographic enrichment          (country_or_region -> country/continent)
+  -> deduplicate_title.py           (title dedup)
+  -> count_thyroid_triplets.py      (keep thyroid-related triplets)
+  -> classify_risk_factors.py       (expand triplets + Level-3 classification)
+  -> group_synonyms.py              (authoritative synonym factor map)
+  -> evidence_quantification.py     (composite score + group + guideline)
+  -> umls_match.py                  (UMLS-style normalization)
+  -> statistics.py                  (bibliometric tables)
 ```
 
 Supporting modules:
@@ -30,17 +32,21 @@ Supporting modules:
 | `factor_scoring.py` | numeric parsing, Z-score, composite-score primitives and normalization |
 | `llm_client.py` | OpenAI/Gemini-compatible LLM client (placeholder in demo) |
 
-## Step 08: classification
+## Structured extraction
 
-`step08_factor_classifier.classify_subjects_to_level_3` maps each unique `subject_name` directly to a Level-3 label, then derives `label_1` from the taxonomy and `label_2` from `factor-subcategory.json`. When the LLM is disabled, a deterministic keyword-rule fallback keeps the demo runnable. The full pipeline uses multi-model majority voting (manuscript "Semantic taxonomy construction module").
+`structured_extraction.py` runs the manuscript's "Structured abstract extraction module": each title/abstract pair is sent to DeepSeek-V4-Pro with the JSON schema in `prompt/en/structured_extraction_en.txt`, and the returned JSON is flattened into the wide `causal_triplets_1..N` columns consumed downstream. Requests are non-streaming, `temperature=0.0`, and cached/logged under `agent_data/`.
 
-## Step 09: synonym harmonization
+## Classification
 
-`step09_group_synonyms.load_semantic_factor_map` reads the authoritative semantic-merged `v2` CSV and explodes each `factor_key` into one row per synonym. `factor_id` is the SHA-256 of the canonical key (terms sorted by `(length, term)`). `step09_merge_age` consolidates the age degree terms (`Age` / `Older age` / `Younger age`).
+`factor_classifier.classify_subjects_to_level_3` maps each unique `subject_name` directly to a Level-3 label, then derives `label_1` from the taxonomy and `label_2` from `factor-subcategory.json`. When the LLM is disabled, a deterministic keyword-rule fallback keeps the demo runnable. The full pipeline uses multi-model majority voting (manuscript "Semantic taxonomy construction module").
 
-## Step 10: evidence quantification
+## Synonym harmonization
 
-`step10_factor_data.extract_source_triplets` parses sample size, p-value, significance grade and evidence grade. `step10_factor_scores.compute_tables` computes the composite score and the year/continent/classification group tables. `step10_guidelines.compute_guideline_tables` runs the guideline concordance and gap analysis.
+`group_synonyms.load_semantic_factor_map` reads the authoritative semantic-merged `v2` CSV and explodes each `factor_key` into one row per synonym. `factor_id` is the SHA-256 of the canonical key (terms sorted by `(length, term)`). `merge_age` consolidates the age degree terms (`Age` / `Older age` / `Younger age`).
+
+## Evidence quantification
+
+`factor_data.extract_source_triplets` parses sample size, p-value, significance grade and evidence grade. `factor_scores.compute_tables` computes the composite score and the year/continent/classification group tables. `guideline_analysis.compute_guideline_tables` runs the guideline concordance and gap analysis. `evidence_quantification.run_evidence_quantification` writes the outputs.
 
 ## Ablation
 

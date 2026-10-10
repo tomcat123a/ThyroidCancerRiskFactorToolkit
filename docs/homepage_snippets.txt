@@ -18,4 +18,4 @@ biomedical-nlp
 medical-informatics
 
 4) Suggested repository subtitle
-From preproc_thca.xlsx to semantic labels, synonym fusion, UMLS matching, and manuscript-ready statistics.
+From abstracts_final.xlsx to structured extraction, semantic labels, synonym fusion, UMLS matching, and manuscript-ready statistics.

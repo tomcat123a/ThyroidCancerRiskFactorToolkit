@@ -1,28 +1,28 @@
-"""Step 10 entry: score factors and run guideline analysis (semantic variant).
+"""Evidence quantification entry: score factors and run guideline analysis.
 
-Reproduces ``step10_factor_scores_semantic_entry.run``.  Takes the Step 07
-paper table and the Step 09 semantic factor map, computes the composite score,
-the year/continent/classification group statistics and the guideline-oriented
-coverage, and writes CSV + Excel outputs under ``outputs/10_factor_scores_semantic``.
+Takes the thyroid-filtered paper table and the semantic factor map, computes the
+composite score, the year/continent/classification group statistics and the
+guideline-oriented coverage, and writes CSV + Excel outputs under
+``outputs/10_factor_scores_semantic``.
 """
 
 from __future__ import annotations
 
-import os
+import json
 import uuid
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
 
-from .step10_common import write_tables
-from .step10_factor_data import FACTOR_COLUMNS, LABELS, YEAR_BINS
-from .step10_factor_data_semantic import build_detail_semantic
-from .step10_factor_scores import compute_tables, paper_factor_rows
-from .step10_guidelines import compute_guideline_tables
+from .factor_data import FACTOR_COLUMNS, LABELS, YEAR_BINS
+from .factor_data_semantic import build_detail_semantic
+from .factor_scores import compute_tables, paper_factor_rows
+from .guideline_analysis import compute_guideline_tables
+from .table_export import write_tables
 
 
-def run_step10(
+def run_evidence_quantification(
     papers: pd.DataFrame,
     factor_map: pd.DataFrame,
     guideline_dir: Path,
@@ -67,8 +67,6 @@ def run_step10(
         "outputs": {key: str(path) for key, path in paths.items()},
         "qa": qa.to_dict("records"),
     }
-    manifest.write_text(
-        __import__("json").dumps(record, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    manifest.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
     paths["manifest"] = manifest
     return paths

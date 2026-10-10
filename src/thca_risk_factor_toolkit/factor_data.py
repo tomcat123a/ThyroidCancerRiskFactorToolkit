@@ -1,9 +1,9 @@
-"""Step 10 source-triplet extraction and numeric parsing.
+"""Source-triplet extraction and numeric parsing for evidence quantification.
 
-Reproduces ``step10_factor_data.extract_source_triplets``.  The input is the
-thyroid-filtered paper table (Step 07 output) with wide ``causal_triplets_N.*``
-columns; the output is one row per triplet with parsed sample size, p-value,
-significance grade and evidence grade.
+Reproduces ``factor_data.extract_source_triplets``.  The input is the
+thyroid-filtered paper table with wide ``causal_triplets_N.*`` columns; the
+output is one row per triplet with parsed sample size, p-value, significance
+grade and evidence grade.
 """
 
 from __future__ import annotations
@@ -22,7 +22,7 @@ from .factor_scoring import (
     year_number,
     year_to_bin,
 )
-from .step10_common import Progress, require_columns, text
+from .table_export import Progress, require_columns, text
 
 YEAR_BINS = ["before_2000", "2001_2010", "2011_2015", "2016_2020", "2021_2025"]
 LABELS = ["label_1", "label_2", "label_3"]
@@ -81,7 +81,7 @@ def extract_source_triplets(papers: pd.DataFrame) -> pd.DataFrame:
     if result.empty:
         raise ValueError("Source papers contain no nonempty subjects.")
     if not result["disease"].str.contains("thyr", case=False, regex=False).all():
-        raise ValueError("Source still contains non-thyroid triplets. Rebuild Step 07 before scoring.")
+        raise ValueError("Source still contains non-thyroid triplets. Rebuild the thyroid filter before scoring.")
 
     result["publish_year_raw"] = result["publish_year"]
     result["publish_year"] = result["publish_year"].map(year_number)

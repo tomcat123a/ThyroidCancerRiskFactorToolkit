@@ -1,6 +1,6 @@
-"""Step 05: deduplicate records by the ``TI`` title string, keeping the first row.
+"""Title-based deduplication, keeping the first occurrence of each ``TI``.
 
-Reproduces ``step05_deduplicate_title_entry.py`` from the original pipeline.
+Reproduces the title/abstract deduplication step of the original pipeline.
 The function is importable (:func:`deduplicate_by_title`) and directly runnable
 (:func:`main`), never depending on a fixed working directory.
 """
@@ -34,7 +34,7 @@ def main() -> None:
         "因TI标题重复删除数": len(removed),
         "去重后剩余文献数": len(remaining),
     })
-    print(f"步骤 5 完成：因 TI 标题重复删除 {len(removed)} 行，最终保留 {len(remaining)} 行。")
+    print(f"去重完成：因 TI 标题重复删除 {len(removed)} 行，最终保留 {len(remaining)} 行。")
 
 
 if __name__ == "__main__":

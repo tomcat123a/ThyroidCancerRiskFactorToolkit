@@ -2,7 +2,7 @@
   "project_title": "Code Repository for LLM-Based Thyroid Cancer Risk Factor Extraction (including semantic clustering, semantic tagging, synonym fusion, statistics, and UMLS matching)",
   "author_name": "Yuqun Zeng",
   "author_email": "zengyuqun@hmc.edu.cn",
-  "input_xlsx": "data/sample/preproc_thca_demo_first100.xlsx",
+  "input_xlsx": "data/sample/abstracts_final_demo_first100.xlsx",
   "output_dir": "outputs",
   "prompt_dir": "prompt",
   "agent_data_dir": "agent_data",

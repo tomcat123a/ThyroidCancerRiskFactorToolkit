@@ -1,10 +1,9 @@
-"""Step 07: count causal triplets and keep only thyroid-related triplets.
+"""Count causal triplets and keep only thyroid-related triplets.
 
-Reproduces ``step07_count_thyroid_causal_triplets_entry.py``.  A triplet is
-considered thyroid-related when its ``object.disease`` contains the substring
-``thyr`` (case-insensitive).  Non-thyroid triplets inside retained papers are
-removed and the remaining triplets are compacted forward so slot numbering stays
-contiguous.
+A triplet is considered thyroid-related when its ``object.disease`` contains the
+substring ``thyr`` (case-insensitive).  Non-thyroid triplets inside retained
+papers are removed and the remaining triplets are compacted forward so slot
+numbering stays contiguous.
 """
 
 from __future__ import annotations
@@ -36,7 +35,7 @@ def discover_triplet_groups(columns: List[str]) -> List[TripletGroup]:
         grouped_columns.setdefault(index, {})[field_name] = column
 
     if not grouped_columns:
-        raise ValueError("输入 CSV 中没有发现 causal_triplets_N.subject.name 列。")
+        raise ValueError("输入中没有发现 causal_triplets_N.subject.name 列。")
 
     indexes = sorted(grouped_columns)
     if indexes != list(range(1, max(indexes) + 1)):
@@ -78,10 +77,6 @@ def filter_thyroid_triplets(
     work = dataframe.copy()
     for column in generated_triplet_columns:
         work[column] = ""
-
-    total_triplets = 0
-    thyroid_triplets = 0
-    retained_thyroid_triplets = 0
 
     row_triplet_counts = pd.Series(0, index=work.index, dtype="int64")
     row_thyroid_counts = pd.Series(0, index=work.index, dtype="int64")

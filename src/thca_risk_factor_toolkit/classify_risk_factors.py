@@ -1,7 +1,6 @@
-"""Step 08: extract risk-factor triplets and classify them to Level-3 labels.
+"""Extract risk-factor triplets and classify them to Level-3 labels.
 
-Reproduces ``step08_extract_and_classify_risk_factors_entry.py``.  The input is
-the thyroid-filtered paper table from Step 07; the output is one row per
+The input is the thyroid-filtered paper table; the output is one row per
 risk-factor triplet with ``label_1`` / ``label_2`` / ``label_3`` attached.
 """
 
@@ -13,8 +12,8 @@ from typing import Dict, List, Mapping, Sequence, Tuple
 import pandas as pd
 
 from .common import ensure_columns, normalized_text
+from .factor_classifier import classify_subjects_to_level_3
 from .hierarchy import FactorHierarchy
-from .step08_factor_classifier import classify_subjects_to_level_3
 
 MODEL = "DeepSeek-V4-Pro"
 FINAL_COLUMNS = [
@@ -59,7 +58,7 @@ def discover_triplet_columns(columns) -> List[Tuple[int, Dict[str, str]]]:
             index, field_name = match.groups()
             groups.setdefault(int(index), {})[field_name] = column
     if not groups:
-        raise ValueError("输入 CSV 中没有发现 causal_triplets_N.* 字段。")
+        raise ValueError("输入中没有发现 causal_triplets_N.* 字段。")
     missing_subject = [str(i) for i, fields in sorted(groups.items()) if "subject.name" not in fields]
     if missing_subject:
         raise ValueError(f"以下三元组缺少 subject.name 字段：{', '.join(missing_subject)}")
@@ -143,7 +142,7 @@ def run_extract_and_classify(
         subject_names=unique_subjects,
         hierarchy=hierarchy,
         model=model,
-        task_name="step08_factor_classification",
+        task_name="factor_classification",
         client=client,
     )
     final = build_final_output(details, labels)

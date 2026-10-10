@@ -1,9 +1,9 @@
-"""Step 08 factor classification: single-stage mapping to a Level-3 label.
+"""Factor classification: single-stage mapping to a Level-3 label.
 
-Reproduces ``step08_factor_classifier.classify_subjects_to_level_3``.  Each
-unique ``subject_name`` is assigned directly to one fine-grained Level-3
-category; the Level-1 domain is derived from the taxonomy and the Level-2
-category is read back from ``factor-subcategory.json``.
+Reproduces ``factor_classifier.classify_subjects_to_level_3``.  Each unique
+``subject_name`` is assigned directly to one fine-grained Level-3 category; the
+Level-1 domain is derived from the taxonomy and the Level-2 category is read
+back from ``factor-subcategory.json``.
 
 When the LLM is disabled (the public default) a deterministic keyword-rule
 fallback assigns labels so the demo remains runnable end-to-end.  The full
@@ -105,7 +105,6 @@ def _classify_with_llm(
         for batch_result in executor.map(_run_batch, batches):
             results.update(batch_result)
 
-    # Fill any unresolved subjects with the rule fallback.
     for name in subject_names:
         if name not in results:
             results[name] = _classify_with_rules(name, taxonomy, level_1_by_level_3)

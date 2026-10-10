@@ -1,11 +1,9 @@
-"""Step 09 (manual): consolidate ``Older age`` / ``Younger age`` into ``Age``.
+"""Manual consolidation of ``Older age`` / ``Younger age`` into ``Age``.
 
-Reproduces ``step09_merge_age_factors_entry.py``.  The second-round semantic
-CSV (``v2``) already collapses degree-differentiated age terms into a single
-``Age`` factor, so the public default is the ``v2`` path: it validates that the
-consolidation is already present and returns the factor map unchanged.  The
-``v1`` path (merge three separate rows into one) is provided for completeness
-and documented against the manuscript's "iterative refinement" description.
+The second-round semantic CSV (``v2``) already collapses degree-differentiated
+age terms into a single ``Age`` factor, so the public default is the ``v2``
+path: it validates that the consolidation is already present and returns the
+factor map unchanged.
 """
 
 from __future__ import annotations
@@ -17,17 +15,14 @@ import pandas as pd
 
 from .common import normalized_text
 from .factor_scoring import factor_id_from_key
-from .step09_group_synonyms import SEMANTIC_COLUMNS
+from .group_synonyms import SEMANTIC_COLUMNS
 
 AGE_LABEL = "Age-related Clinical Presentation"
 AGE_NAMES = ("Age", "Older age", "Younger age")
 
 
 def consolidate_age_factors(frame: pd.DataFrame) -> pd.DataFrame:
-    """Ensure ``Age`` is a single factor; merge degree terms if still separate.
-
-    In ``v2`` input the merge is already applied, so this is a validating no-op.
-    """
+    """Ensure ``Age`` is a single factor; merge degree terms if still separate."""
     names = set(frame["factor_name"].map(normalized_text).tolist())
     if "Older age" not in names and "Younger age" not in names:
         return frame
@@ -58,13 +53,6 @@ def validate_age_consolidation(frame: pd.DataFrame) -> None:
     names = set(frame["factor_name"].map(normalized_text).tolist())
     if "Older age" in names or "Younger age" in names:
         raise ValueError("v2 输入中仍存在独立的 Older age / Younger age 因子。")
-    age_factors = frame[frame["label_3"].eq(AGE_LABEL)]
-    if age_factors.empty:
-        return
-    for _, row in age_factors.iterrows():
-        terms = json.loads(row["factor_key"])
-        if any(normalized_text(term) in {"age", "older age", "younger age"} for term in terms):
-            continue
 
 
 def main() -> None:
@@ -73,7 +61,7 @@ def main() -> None:
     path = find_project_root() / "data" / "sample" / "09_factor_label_associations_semantic_merged_v2_demo_first100.csv"
     frame = pd.read_csv(path, dtype=str, keep_default_na=False, encoding="utf-8-sig")
     validate_age_consolidation(frame)
-    print("[Step 09 merge age] v2 已合并 Age，无需再处理。")
+    print("[merge age] v2 已合并 Age，无需再处理。")
 
 
 if __name__ == "__main__":
