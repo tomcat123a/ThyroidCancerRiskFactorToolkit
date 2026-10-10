@@ -1,169 +1,86 @@
+"""Manuscript-facing bibliometric statistics.
+
+These tables complement the Step 10 factor-level exports with paper-level
+descriptive statistics (publication counts by year bin, study type, continent
+and country) and the synonym/UMLS catalogs described in the manuscript's
+"Bibliometric characteristics" and "Semantic taxonomy" sections.
+"""
+
 from __future__ import annotations
 
 import pandas as pd
 
-from .subject_records import YEAR_BIN_ORDER
+from .factor_scoring import YEAR_BINS, year_to_bin
 
 
-def build_statistics_workbook(records: pd.DataFrame) -> dict[str, pd.DataFrame]:
-    work = records.copy()
-    for column in [
-        "country_name",
-        "continent_name",
-        "study_type",
-        "study_design",
-        "label_1",
-        "label_2",
-        "label",
-        "evidence_strength_grade_level",
-        "object_endpoint_type",
-    ]:
+def _year_bin_sort_key(value: object) -> int:
+    text = str(value).strip()
+    order = [*YEAR_BINS, "other_year", "MISSING"]
+    return order.index(text) if text in order else len(order) + 1
+
+
+def build_paper_statistics(papers: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    work = papers.copy()
+    if "publish_year" in work.columns:
+        work["year_bin"] = work["publish_year"].map(year_to_bin)
+    for column in ["study_type", "continent_name", "country_name"]:
         if column in work.columns:
             work[column] = work[column].fillna("").astype(str).str.strip()
 
-    overall_papers = (
-        work[["_id", "publish_year", "year_bin", "study_type", "study_design", "country_name", "continent_name"]]
-        .drop_duplicates()
-    )
-    overall_papers["publish_year_sort"] = pd.to_numeric(overall_papers["publish_year"], errors="coerce")
-    overall_papers = overall_papers.sort_values(["publish_year_sort", "_id"], ascending=[True, True]).drop(
-        columns=["publish_year_sort"]
-    )
+    paper_id = "_source_row_id" if "_source_row_id" in work.columns else "TI"
+    overall = work[[paper_id, "year_bin", "study_type", "continent_name", "country_name"]].drop_duplicates()
 
     paper_year_basic_stats = (
-        overall_papers.groupby("year_bin", dropna=False)
-        .agg(n_papers=("_id", "nunique"))
+        overall.groupby("year_bin", dropna=False)
+        .agg(n_papers=(paper_id, "nunique"))
         .reset_index()
         .sort_values("year_bin", key=lambda series: series.map(_year_bin_sort_key))
     )
 
     study_type_stats = (
-        overall_papers.groupby("study_type", dropna=False)
-        .agg(n_papers=("_id", "nunique"))
+        overall.groupby("study_type", dropna=False)
+        .agg(n_papers=(paper_id, "nunique"))
         .reset_index()
         .sort_values(["n_papers", "study_type"], ascending=[False, True])
     )
 
-    continent_year_bin_long = (
-        work.groupby(["continent_name", "year_bin"], dropna=False)
-        .agg(n_factors=("factor_key", "nunique"), n_papers=("_id", "nunique"))
+    continent_long = (
+        overall.groupby(["continent_name", "year_bin"], dropna=False)
+        .agg(n_papers=(paper_id, "nunique"))
         .reset_index()
         .rename(columns={"continent_name": "continent_norm"})
-        .sort_values(["continent_norm", "year_bin"], key=lambda series: series.map(_sort_value))
     )
+    continent_pivot = continent_long.pivot(index="continent_norm", columns="year_bin", values="n_papers").fillna(0).reset_index()
 
-    continent_year_bin_pivot = (
-        continent_year_bin_long.pivot(index="continent_norm", columns="year_bin", values="n_factors")
-        .fillna(0)
-        .reset_index()
-    )
-
-    country_top10 = (
-        work.groupby("country_name", dropna=False)
-        .agg(n_papers=("_id", "nunique"))
+    country_counts = (
+        overall.groupby("country_name", dropna=False)
+        .agg(n_papers=(paper_id, "nunique"))
         .reset_index()
         .rename(columns={"country_name": "country_norm"})
         .sort_values(["n_papers", "country_norm"], ascending=[False, True])
-        .head(10)
     )
-    top10_names = set(country_top10["country_norm"].tolist())
-    country_top10_year_bin_long = (
-        work[work["country_name"].isin(top10_names)]
-        .groupby(["country_name", "year_bin"], dropna=False)
-        .agg(n_factors=("factor_key", "nunique"), n_papers=("_id", "nunique"))
-        .reset_index()
-        .rename(columns={"country_name": "country_norm"})
-        .sort_values(["country_norm", "year_bin"], key=lambda series: series.map(_sort_value))
-    )
-    country_top10_year_bin_pivot = (
-        country_top10_year_bin_long.pivot(index="country_norm", columns="year_bin", values="n_factors")
-        .fillna(0)
-        .reset_index()
-    )
-
-    label1_overall = _build_group_table(work, "label_1")
-    label1_year_bin = _build_group_year_table(work, "label_1")
-    evidence_grade_overall = _build_group_table(work, "evidence_strength_grade_level")
-    evidence_grade_year_bin = _build_group_year_table(work, "evidence_strength_grade_level")
-    umls_coverage_summary = _build_group_table(work, "umls_match_status")
-
-    endpoint_top3_factors = (
-        work.groupby(["object_endpoint_type", "factor_name", "factor_synonyms"], dropna=False)
-        .agg(num_publish_paper=("_id", "nunique"))
-        .reset_index()
-    )
-    endpoint_top3_factors["rank"] = endpoint_top3_factors.groupby("object_endpoint_type")["num_publish_paper"].rank(
-        method="first", ascending=False
-    )
-    endpoint_top3_factors = endpoint_top3_factors[endpoint_top3_factors["rank"] <= 3].sort_values(
-        ["object_endpoint_type", "rank", "factor_name"]
-    )
-
-    factor_synonym_catalog = (
-        work[
-            [
-                "factor_name",
-                "factor_cluster_label",
-                "factor_display_name",
-                "factor_synonyms",
-                "factor_group_size",
-                "label_1",
-                "label_2",
-                "label",
-                "umls_term",
-                "umls_cui",
-                "umls_semantic_type",
-            ]
-        ]
-        .drop_duplicates()
-        .sort_values(["factor_name", "label_1", "label_2"])
-    )
+    country_top10 = country_counts.head(10)
 
     return {
         "paper_year_basic_stats": paper_year_basic_stats,
         "study_type_stats": study_type_stats,
-        "continent_year_bin_long": continent_year_bin_long,
-        "continent_year_bin_pivot": continent_year_bin_pivot,
+        "continent_year_bin_long": continent_long,
+        "continent_year_bin_pivot": continent_pivot,
         "country_top10_papers": country_top10,
-        "country_top10_year_bin_long": country_top10_year_bin_long,
-        "country_top10_year_bin_pivot": country_top10_year_bin_pivot,
-        "label1_overall": label1_overall,
-        "label1_year_bin": label1_year_bin,
-        "evidence_grade_overall": evidence_grade_overall,
-        "evidence_grade_year_bin": evidence_grade_year_bin,
-        "endpoint_top3_factors": endpoint_top3_factors,
-        "factor_synonym_catalog": factor_synonym_catalog,
-        "umls_coverage_summary": umls_coverage_summary,
     }
 
 
-def _build_group_table(work: pd.DataFrame, field: str) -> pd.DataFrame:
-    return (
-        work.groupby(field, dropna=False)
-        .agg(n_factors=("factor_key", "nunique"), n_papers=("_id", "nunique"))
-        .reset_index()
-        .sort_values(["n_factors", field], ascending=[False, True])
-    )
+def build_synonym_catalog(factor_map: pd.DataFrame) -> pd.DataFrame:
+    columns = ["factor_id", "factor_key", "factor_name", "factor_synonyms", "factor_group_size", "label_1", "label_2", "label_3"]
+    available = [c for c in columns if c in factor_map.columns]
+    return factor_map[available].drop_duplicates("factor_id").sort_values(["label_1", "label_3", "factor_name"])
 
 
-def _build_group_year_table(work: pd.DataFrame, field: str) -> pd.DataFrame:
-    table = (
-        work.groupby([field, "year_bin"], dropna=False)
-        .agg(n_factors=("factor_key", "nunique"), n_papers=("_id", "nunique"))
-        .reset_index()
-    )
-    return table.sort_values([field, "year_bin"], key=lambda series: series.map(_sort_value))
-
-
-def _sort_value(value: object) -> tuple[int, str]:
-    text = str(value).strip()
-    if text in YEAR_BIN_ORDER:
-        return (0, f"{YEAR_BIN_ORDER.index(text):02d}")
-    return (1, text.lower())
-
-
-def _year_bin_sort_key(value: object) -> int:
-    text = str(value).strip()
-    if text in YEAR_BIN_ORDER:
-        return YEAR_BIN_ORDER.index(text)
-    return len(YEAR_BIN_ORDER) + 1
+def build_umls_coverage(umls_match: pd.DataFrame) -> pd.DataFrame:
+    matched = umls_match["umls_matcher_best_cui"].astype(str).str.strip().ne("")
+    return pd.DataFrame([{
+        "n_total_factors": len(umls_match),
+        "n_matched_factors": int(matched.sum()),
+        "n_unmatched_factors": int((~matched).sum()),
+        "umls_coverage_ratio": float(matched.mean()) if len(umls_match) else 0.0,
+    }])

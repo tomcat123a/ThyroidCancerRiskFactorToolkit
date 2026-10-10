@@ -36,8 +36,12 @@ class AppConfig:
     agent_data_dir: Path
     demo_umls_lexicon_csv: Path
     demo_country_reference_csv: Path
+    demo_hierarchy_json: Path
+    demo_semantic_csv: Path
+    demo_guideline_dir: Path
     llm: LlmSettings
-    alternate_llm: LlmSettings
+    secondary_llm: LlmSettings
+    adjudicator_llm: LlmSettings
     config_path: Path
     project_root: Path
 
@@ -70,8 +74,12 @@ def load_config() -> AppConfig:
         agent_data_dir=(project_root / str(payload.get("agent_data_dir", "agent_data"))).resolve(),
         demo_umls_lexicon_csv=(project_root / str(payload.get("demo_umls_lexicon_csv", "data/demo_resources/umls_concepts_demo.csv"))).resolve(),
         demo_country_reference_csv=(project_root / str(payload.get("demo_country_reference_csv", "data/demo_resources/country_continent_reference.csv"))).resolve(),
+        demo_hierarchy_json=(project_root / str(payload.get("demo_hierarchy_json", "data/demo_resources/factor-subcategory.json"))).resolve(),
+        demo_semantic_csv=(project_root / str(payload.get("demo_semantic_csv", "data/sample/09_factor_label_associations_semantic_merged_v2_demo_first100.csv"))).resolve(),
+        demo_guideline_dir=(project_root / str(payload.get("demo_guideline_dir", "data/demo_resources/guideline"))).resolve(),
         llm=_build_llm_settings(payload.get("llm", {})),
-        alternate_llm=_build_llm_settings(payload.get("alternate_llm", {})),
+        secondary_llm=_build_llm_settings(payload.get("secondary_llm", {})),
+        adjudicator_llm=_build_llm_settings(payload.get("adjudicator_llm", {})),
         config_path=config_path.resolve(),
         project_root=project_root,
     )

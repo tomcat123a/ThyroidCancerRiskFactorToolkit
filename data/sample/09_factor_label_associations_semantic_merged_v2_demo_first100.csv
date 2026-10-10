@@ -1,0 +1,5 @@
+label_1,label_2,label_3,factor_id,factor_key,factor_name,factor_synonyms,factor_group_size
+Clinical, Pathological and Management Features,Clinical Characteristics and Comorbid Background,Age-related Clinical Presentation,demo_age,"[""age"", ""older age"", ""younger age""]",age,"age | older age | younger age",3
+Clinical, Pathological and Management Features,Tumor Pathology and Morphology,Tumor Morphology and Spatial Characteristics,demo_tumor_size,"[""tumor size"", ""primary tumor size""]",tumor size,"tumor size | primary tumor size",2
+Clinical, Pathological and Management Features,Tumor Staging and Metastatic Features,Lymph Node Status and Involvement,demo_lnm,"[""lymph node metastasis"", ""lymph node metastases""]",lymph node metastasis,"lymph node metastasis | lymph node metastases",2
+Genomic and Epigenetic Features,Driver Mutations and Structural Variants,Proto-oncogene Mutations,demo_braf,"[""BRAF V600E"", ""BRAF mutation""]",BRAF V600E,"BRAF V600E | BRAF mutation",2

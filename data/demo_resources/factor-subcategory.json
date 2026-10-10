@@ -1,0 +1,176 @@
+{
+  "Clinical, Pathological and Management Features": {
+    "Tumor Pathology and Morphology": [
+      "Histopathological Variants",
+      "Microscopic Morphological Features",
+      "Tumor Morphology and Spatial Characteristics",
+      "Anatomic Local Extension"
+    ],
+    "Tumor Staging and Metastatic Features": [
+      "Lymph Node Status and Involvement",
+      "Distant Metastasis and Metastatic Sites",
+      "Clinical Staging and Risk Stratification Systems"
+    ],
+    "Imaging and Laboratory Diagnostics": [
+      "Ultrasound Diagnostic Features",
+      "Advanced Medical Imaging",
+      "Biochemical and Serological Markers"
+    ],
+    "Clinical Characteristics and Comorbid Background": [
+      "Endocrine and Autoimmune Background",
+      "Age-related Clinical Presentation",
+      "Sex-specific Clinical Features",
+      "Clinical Symptoms and Physical Signs",
+      "Non-thyroid Comorbidities",
+      "Reproductive and Clinical Hormonal History",
+      "Medical Infectious Factors"
+    ],
+    "Treatment Modalities and Techniques": [
+      "Surgical Extent and Procedures",
+      "Intraoperative Techniques and Adjuncts",
+      "Minimally Invasive and Alternative Procedures",
+      "Radioactive Iodine Therapy",
+      "External Beam Radiotherapy",
+      "Systemic Pharmacotherapy"
+    ],
+    "Outcomes, Complications and Prognosis": [
+      "Treatment Response and Clinical Outcomes",
+      "Complications and Treatment-related Toxicities"
+    ]
+  },
+  "Genomic and Epigenetic Features": {
+    "Genetic Susceptibility and Familial Background": [
+      "Hereditary Syndromes and Familial History",
+      "Population Genetic Background and Ancestry"
+    ],
+    "Driver Mutations and Structural Variants": [
+      "Proto-oncogene Mutations",
+      "Tumor Suppressor Gene Dysregulation",
+      "Gene Fusions and Rearrangements",
+      "Chromosomal Instability and Copy Number Variants (CNVs)",
+      "DNA Damage Repair Gene Variants",
+      "Telomere and TERT Regulatory Mutations"
+    ],
+    "Epigenetics and Non-coding RNA Regulation": [
+      "DNA Methylation and Epigenetic Modifiers",
+      "microRNA (miRNA) Alterations",
+      "Long Non-coding RNA (lncRNA) Alterations",
+      "Circular RNA (circRNA) Alterations"
+    ],
+    "Signaling, Metabolic and Functional Genetic Variants": [
+      "Signal Transduction Pathway Genetic Alterations",
+      "Transcription Factor Dysregulation",
+      "Mitochondrial DNA (mtDNA) Variants",
+      "Metabolic and Pharmacogenetic Polymorphisms",
+      "Endocrine-related Genetic Variants (Receptors and Transporters)",
+      "Apoptosis and Cell Cycle Genetic Regulators",
+      "Single Nucleotide Polymorphisms (SNPs)"
+    ]
+  },
+  "Systemic and Tumor Metabolic Features": {
+    "Thyroid Axis and Endocrine Metabolism": [
+      "Thyroid Axis and TSH Signaling",
+      "Thyroid Hormone Metabolism and Deiodination",
+      "Steroid and Sex Hormone Metabolism",
+      "Electrolyte and Bone Mineral Homeostasis"
+    ],
+    "Energy, Glucose and Lipid Metabolism": [
+      "Body Composition and Anthropometry",
+      "Glucose Metabolism and Glycemic Control",
+      "Insulin Resistance and Hyperinsulinemia",
+      "Lipid Profile and Dyslipidemia",
+      "Fatty Acid Synthesis and Oxidation",
+      "Sphingolipid and Phospholipid Metabolism",
+      "Mitochondrial Function and Bioenergetics",
+      "Aerobic Glycolysis and Warburg Effect"
+    ],
+    "Nutrition, Micronutrients and Oxidative Stress": [
+      "Trace Element and Mineral Metabolism",
+      "Vitamin and Micronutrient Status",
+      "Oxidative Stress and Redox Homeostasis",
+      "Advanced Glycation End-products (AGEs)",
+      "Vitamin and Antioxidant Intake"
+    ],
+    "Tumor Microenvironment and Systemic Metabolic Regulation": [
+      "Adipokine and Adipocyte Signaling",
+      "Metabolic Syndrome and Systemic Inflammation",
+      "Hypoxia-inducible Factors and Hypoxic Response",
+      "Proteostasis and Autophagy Regulation",
+      "One-carbon Metabolism and Folate Pathway",
+      "Amino Acid and Protein Metabolism",
+      "Purinergic and Adenosine Signaling",
+      "Liver-specific Metabolic Dysfunction",
+      "Enzymatic Activity and Biotransformation",
+      "Growth Factor and IGF Axis Activation"
+    ]
+  },
+  "Environmental and Occupational Exposures": {
+    "Radiation-related Exposures": [
+      "Nuclear Accidents and Radioactive Fallout",
+      "Ionizing Radiation (Medical, Natural and Occupational Sources)",
+      "Non-ionizing Radiation and Electromagnetic Fields (Environmental and Occupational)"
+    ],
+    "Chemical Pollutant Exposure": [
+      "Endocrine Disrupting Chemicals (EDCs) and Plasticizers",
+      "Pesticides, Herbicides and Agricultural Chemicals",
+      "Persistent Organic Pollutants (POPs) and Halogenated Compounds",
+      "Heavy Metals and Toxic Trace Element Contamination",
+      "Industrial Chemicals and Solvents",
+      "Ambient Air Pollution and Industrial Atmospheric Emissions",
+      "Water Quality, Contaminants and Groundwater Pollution",
+      "Flame Retardants and Synthetic Industrial Additives"
+    ],
+    "Geographic, Climate and Living Environment": [
+      "Geographic Iodine Distribution and Salt Iodization Policies",
+      "Residential Geography, Urbanization and Industrial Proximity",
+      "Natural Geologic and Volcanic Environments",
+      "Climate, Seasonality and Thermal Environmental Stress",
+      "Light Pollution and Environmental Circadian Disruptors",
+      "Environmental Exposures from Major Disaster Events"
+    ],
+    "Occupation-specific Exposures": [
+      "Occupational Dusts, Fibers and Aerosols",
+      "Shift Work and Circadian Rhythm Disruption",
+      "Specific Professional Roles and Industrial Sector Exposure",
+      "Workplace Physical and Psychosocial Stressors",
+      "Occupational Safety Equipment and Protocol Factors"
+    ]
+  },
+  "Lifestyle, Dietary and Psychosocial Factors": {
+    "Dietary and Nutritional Patterns": [
+      "Dietary Iodine and Mineral Intake",
+      "Fruits and Vegetables Consumption",
+      "Seafood and Fish Intake",
+      "Meat, Dairy and Animal Product Consumption",
+      "Fats, Sugars and Processed Food Intake",
+      "Bioactive Compounds and Phytoestrogens",
+      "Vitamin and Antioxidant Intake",
+      "Overall Dietary Patterns and Inflammatory Indices",
+      "Beverage and Caffeine Consumption"
+    ],
+    "Behavioral and Lifestyle Habits": [
+      "Tobacco and Alcohol Consumption",
+      "Physical Activity and Exercise Habits",
+      "Sleep Quality and Circadian Rhythms",
+      "Reproductive and Maternal Lifestyle Factors"
+    ],
+    "Socioeconomic and Psychosocial Context": [
+      "Socioeconomic Status and Health Behaviors",
+      "Marital Status, Family Structure and Social Support",
+      "Psychological Stress and Social Factors",
+      "Psychosocial and Cognitive Variables"
+    ]
+  },
+  "Healthcare System, Population Dynamics and Other Modifiers": {
+    "Healthcare Access and Delivery": [
+      "Healthcare System and Access Factors"
+    ],
+    "Population and Temporal Effects": [
+      "Temporal and Cohort Effects",
+      "Reproductive and Developmental Biology"
+    ],
+    "Physical and Other Stressors": [
+      "Physical and Biomechanical Stressors"
+    ]
+  }
+}

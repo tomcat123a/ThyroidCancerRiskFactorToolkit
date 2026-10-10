@@ -1,3 +1,10 @@
 pandas>=2.0
+numpy>=1.24
 openpyxl>=3.1
 requests>=2.31
+scikit-learn>=1.3
+scipy>=1.10
+
+# Optional: required only for the clustering ablation (docs/ablation_study.md)
+# sentence-transformers>=2.7
+# torch>=2.1

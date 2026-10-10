@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-  { name = "Yuqun Zeng", email = "zengyuqun401@163.com" }
+  { name = "Yuqun Zeng", email = "zengyuqun@hmc.edu.cn" }
 ]
 dependencies = [
   "openpyxl>=3.1",

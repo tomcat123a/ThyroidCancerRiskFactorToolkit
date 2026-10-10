@@ -2,66 +2,53 @@
 
 ## Goal
 
-This repository provides a modular workflow for thyroid cancer risk factor extraction starting from `preproc_thca.xlsx`, with emphasis on manuscript-facing statistical tables rather than figures.
+`thca_risk_factor_toolkit` is the public implementation of the TCRiskFlow manuscript workflow. It starts from a wide-format preprocessed workbook and produces a three-level taxonomy of harmonized, scored risk factors with temporal, geographic and guideline-oriented analyses.
 
-## Module Relationships
+## Module relationships
 
-1. `scripts/run_demo_pipeline_main.py` and `scripts/run_full_pipeline_main.py`
-   - entry scripts
-   - call the package pipeline without `argparse`
-
-2. `src/thca_risk_factor_toolkit/config.py`
-   - loads `config.json`
-   - applies the required lookup order: current working directory first, repository root second
-
-3. `src/thca_risk_factor_toolkit/subject_records.py`
-   - reads the wide-format workbook
-   - expands `causal_triplets_1` to `causal_triplets_12` into long-form subject records
-
-4. `src/thca_risk_factor_toolkit/tagging.py`
-   - fills missing `country_name` and `continent_name`
-   - uses demo reference resources first
-   - can optionally call an external LLM endpoint through placeholders in `config.json`
-
-5. `src/thca_risk_factor_toolkit/clustering.py`
-   - assigns semantic labels `label_1`, `label_2`, and `label`
-   - uses rule-based fallback when LLM access is disabled
-
-6. `src/thca_risk_factor_toolkit/synonyms.py`
-   - groups semantically close subject names into synonym groups
-   - adds a post-clustering labeling step for each synonym group
-   - creates `factor_key`, `factor_name`, `factor_synonyms`, `factor_group_size`, and `factor_cluster_label`
-
-7. `src/thca_risk_factor_toolkit/umls.py`
-   - performs UMLS-style lexical matching against a demo lexicon
-   - can be replaced with a full licensed terminology export
-
-8. `src/thca_risk_factor_toolkit/statistics.py`
-   - exports manuscript-oriented tables to Excel sheets
-   - does not generate figures
-
-9. `src/thca_risk_factor_toolkit/llm_client.py`
-   - stores prompt and response logs under `agent_data/`
-   - supports placeholder-ready DeepSeek-V3.2 and Gemini-3-pro profiles
-
-## Output Flow
+The pipeline (`pipeline.py`) orchestrates these modules in order:
 
 ```text
 preproc_thca.xlsx
-  -> long-form triplet records
-  -> country/continent enrichment
-  -> semantic labels
-  -> synonym fusion
-  -> post-clustering group labels
-  -> UMLS matching
-  -> intermediate workbook
-  -> manuscript statistics workbook
+  -> step05_deduplicate_title.py     (title dedup)
+  -> step07_count_thyroid_triplets.py (keep thyroid-related triplets)
+  -> step08_extract_classify.py      (expand triplets + Level-3 classification)
+  -> step09_group_synonyms.py        (authoritative synonym factor map)
+  -> step10_entry.py                 (composite score + group + guideline)
+  -> umls_match.py                   (UMLS-style normalization)
+  -> statistics.py                   (bibliometric tables)
 ```
 
-## Reproducibility Notes
+Supporting modules:
+
+| Module | Responsibility |
+| --- | --- |
+| `config.py` | loads `config.json` (CWD first, then repo root) into `AppConfig` |
+| `path_utils.py` | project-root resolution; never relies on `__file__` alone |
+| `common.py` | `normalized_text`, CSV read/write, summaries, prompt loading |
+| `hierarchy.py` | `FactorHierarchy` + `load_factor_hierarchy` from `factor-subcategory.json` |
+| `factor_scoring.py` | numeric parsing, Z-score, composite-score primitives and normalization |
+| `llm_client.py` | OpenAI/Gemini-compatible LLM client (placeholder in demo) |
+
+## Step 08: classification
+
+`step08_factor_classifier.classify_subjects_to_level_3` maps each unique `subject_name` directly to a Level-3 label, then derives `label_1` from the taxonomy and `label_2` from `factor-subcategory.json`. When the LLM is disabled, a deterministic keyword-rule fallback keeps the demo runnable. The full pipeline uses multi-model majority voting (manuscript "Semantic taxonomy construction module").
+
+## Step 09: synonym harmonization
+
+`step09_group_synonyms.load_semantic_factor_map` reads the authoritative semantic-merged `v2` CSV and explodes each `factor_key` into one row per synonym. `factor_id` is the SHA-256 of the canonical key (terms sorted by `(length, term)`). `step09_merge_age` consolidates the age degree terms (`Age` / `Older age` / `Younger age`).
+
+## Step 10: evidence quantification
+
+`step10_factor_data.extract_source_triplets` parses sample size, p-value, significance grade and evidence grade. `step10_factor_scores.compute_tables` computes the composite score and the year/continent/classification group tables. `step10_guidelines.compute_guideline_tables` runs the guideline concordance and gap analysis.
+
+## Ablation
+
+`ablation/` compares cosine-average agglomerative clustering and same-K KMeans against the finalized Level-3 labels; see `docs/ablation_study.md`.
+
+## Reproducibility notes
 
 - no `argparse`
-- every script supports direct execution and import-based use
-- the repository does not depend on `__file__` only
-- prompt files live in `prompt/`
-- request logs live in `agent_data/`
+- every module supports import and direct execution
+- paths resolve via `path_utils.find_project_root`
+- prompt files live in `prompt/`; request logs live in `agent_data/`

@@ -1,30 +1,53 @@
 {
   "project_title": "Code Repository for LLM-Based Thyroid Cancer Risk Factor Extraction (including semantic clustering, semantic tagging, synonym fusion, statistics, and UMLS matching)",
   "author_name": "Yuqun Zeng",
-  "author_email": "zengyuqun401@163.com",
+  "author_email": "zengyuqun@hmc.edu.cn",
   "input_xlsx": "data/sample/preproc_thca_demo_first100.xlsx",
   "output_dir": "outputs",
   "prompt_dir": "prompt",
   "agent_data_dir": "agent_data",
   "demo_umls_lexicon_csv": "data/demo_resources/umls_concepts_demo.csv",
   "demo_country_reference_csv": "data/demo_resources/country_continent_reference.csv",
+  "demo_hierarchy_json": "data/demo_resources/factor-subcategory.json",
+  "demo_semantic_csv": "data/sample/09_factor_label_associations_semantic_merged_v2_demo_first100.csv",
+  "demo_guideline_dir": "data/demo_resources/guideline",
   "llm": {
     "enabled": false,
-    "provider": "deepseek_v3_2",
-    "model": "DeepSeek-V3.2",
+    "provider": "openai_compatible",
+    "model": "DeepSeek-V4-Pro",
     "api_url": "https://your-api-url.example.com/v1/chat/completions",
     "api_key": "YOUR_API_KEY",
     "timeout_seconds": 120,
     "max_workers": 10,
     "thinking_enabled": false
   },
-  "alternate_llm": {
-    "provider": "gemini_3_pro",
-    "model": "Gemini-3-pro",
+  "secondary_llm": {
+    "enabled": false,
+    "provider": "openai_compatible",
+    "model": "Doubao-1.8-Seed",
+    "api_url": "https://your-api-url.example.com/v1/chat/completions",
+    "api_key": "YOUR_API_KEY",
+    "timeout_seconds": 120,
+    "max_workers": 10,
+    "thinking_enabled": false
+  },
+  "adjudicator_llm": {
+    "enabled": false,
+    "provider": "gemini_compatible",
+    "model": "Gemini-3-Pro",
     "api_url": "https://your-api-url.example.com/v1beta/models/gemini-3-pro:generateContent",
     "api_key": "YOUR_API_KEY",
     "timeout_seconds": 120,
     "max_workers": 10,
     "thinking_enabled": false
+  },
+  "clustering_ablation": {
+    "semantic_v2_csv": "data/sample/09_factor_label_associations_semantic_merged_v2_demo_first100.csv",
+    "model_dir": "embedding/model_cache/jina-embeddings-v5-text-small",
+    "output_dir": "outputs/ablation_study",
+    "preferred_task": "clustering",
+    "random_state": 42,
+    "kmeans_n_init": 20,
+    "kmeans_max_iter": 300
   }
 }
