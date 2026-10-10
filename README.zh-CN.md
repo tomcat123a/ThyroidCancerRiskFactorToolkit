@@ -6,7 +6,7 @@
 
 **项目作者：** Yuqun Zeng
 **邮箱：** zengyuqun@hmc.edu.cn
-**对应论文：** TCRiskFlow，一个面向甲状腺癌相关风险因素大规模综合的模块化大模型框架（含结构化抽取、层级语义分类、同义词归一化、证据量化与指南导向评估）。
+**对应论文：** A scalable LLM-driven framework for evidence synthesis of disease associated risk factors: application to thyroid cancer.
 
 本仓库是论文方法的公开可运行实现。它把宽表格式的预处理工作簿（`preproc_thca.xlsx`）转化为可追溯、可计算的证据资源：风险因素被划分到三级分类体系、归并为同义词组、匹配 UMLS 概念，并通过一个复合证据分数驱动时间、地理与指南导向分析。
 

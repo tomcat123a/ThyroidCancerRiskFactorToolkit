@@ -6,7 +6,7 @@
 
 **Author:** Yuqun Zeng
 **Email:** zengyuqun@hmc.edu.cn
-**Paper:** TCRiskFlow, a modular large-language-model framework for large-scale synthesis of thyroid-cancer associated risk factors (structured extraction, hierarchical semantic classification, synonym harmonization, evidence quantification and guideline-oriented evaluation).
+**Paper:** A scalable LLM-driven framework for evidence synthesis of disease associated risk factors: application to thyroid cancer.
 
 This repository is the public, runnable implementation of the manuscript's methods. It turns a wide-format preprocessed workbook (`preproc_thca.xlsx`) into a traceable, computable evidence resource: risk factors are classified into a three-level taxonomy, harmonized into synonym groups, matched to UMLS concepts, and scored by a composite evidence score that drives temporal, geographic and guideline-oriented analyses.
 
